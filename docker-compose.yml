@@ -7,10 +7,10 @@ services:
     container_name: retool-api
     restart: unless-stopped
     ports:
-      - "${PORT:-3001}:3001"
+      - "${PORT:-5432}:5432"
     environment:
       NODE_ENV: ${NODE_ENV:-production}
-      PORT: 3001
+      PORT: 5432
       DATABASE_URL: postgresql://${DB_USER:-retool_user}:${DB_PASSWORD:-retool_password}@postgres:5432/${DB_NAME:-retool_db}
       API_KEY: ${API_KEY}
     volumes:
