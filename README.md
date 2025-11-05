@@ -97,7 +97,7 @@ GET /api/products/by-sku?skus=SKU123,SKU456,SKU789
 {
   "success": true,
   "count": 2,
-  "data": [...]
+  "data": ["..."]
 }
 ```
 
