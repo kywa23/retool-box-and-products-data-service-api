@@ -13,14 +13,7 @@ services:
       PORT: 3001
       DATABASE_URL: postgresql://${DB_USER:-retool_user}:${DB_PASSWORD:-retool_password}@postgres:5432/${DB_NAME:-retool_db}
       API_KEY: ${API_KEY}
-    depends_on:
-      postgres:
-        condition: service_healthy
     volumes:
       # Mount source code for development
       - ./:/app
       - /app/node_modules
-
-volumes:
-  postgres_data:
-    driver: local
