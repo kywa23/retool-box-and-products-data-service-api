@@ -97,7 +97,7 @@ GET /api/products/by-sku?skus=SKU123,SKU456,SKU789
 {
   "success": true,
   "count": 2,
-  "data": [...]
+  "data": ["..."]
 }
 ```
 
@@ -126,6 +126,7 @@ GET /api/boxes
         "novaPoshta": 50,
         "ukrPoshta": 40
       },
+      "priority": 0,
       "sku": "BOX_S"
     }
   ]
@@ -168,6 +169,7 @@ CREATE TABLE boxes (
   weight_limit_kg NUMERIC(10, 2) NOT NULL,
   price_nova_poshta NUMERIC(10, 2),
   price_ukr_poshta NUMERIC(10, 2),
+  priority INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );

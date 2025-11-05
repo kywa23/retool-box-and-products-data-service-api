@@ -5,7 +5,7 @@ const db = require('../config/database');
 router.get('/', async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT 
+      SELECT
         sku,
         name,
         length_cm,
@@ -14,10 +14,11 @@ router.get('/', async (req, res) => {
         weight_limit_kg,
         price_nova_poshta,
         price_ukr_poshta,
+        priority,
         created_at,
         updated_at
       FROM boxes
-      ORDER BY name
+      ORDER BY priority::INTEGER ASC, name
     `);
     
     const formattedData = result.rows.map(row => ({
@@ -32,6 +33,7 @@ router.get('/', async (req, res) => {
         novaPoshta: row.price_nova_poshta,
         ukrPoshta: row.price_ukr_poshta
       },
+      priority: parseInt(row.priority) || 0,
       sku: row.sku
     }));
     
