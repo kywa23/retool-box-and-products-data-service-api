@@ -47,7 +47,7 @@ router.get('/sizes', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const result = await db.query(`
-      SELECT 
+      SELECT
         sku,
         name,
         weight_g,
@@ -56,12 +56,13 @@ router.get('/', async (req, res) => {
         height_mm,
         photo,
         additional_sku,
+        packaging,
         created_at,
         updated_at
       FROM products
       ORDER BY sku
     `);
-    
+
     res.json({
       success: true,
       count: result.rows.length,
@@ -69,10 +70,10 @@ router.get('/', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching products:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       error: 'Failed to fetch products',
-      message: error.message 
+      message: error.message
     });
   }
 });
@@ -80,19 +81,19 @@ router.get('/', async (req, res) => {
 router.get('/by-sku', async (req, res) => {
   try {
     const skus = req.query.skus;
-    
+
     if (!skus) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
         error: 'SKU parameter is required',
         message: 'Use ?skus=SKU1 or ?skus=SKU1,SKU2,SKU3'
       });
     }
-    
+
     const skuArray = skus.split(',').map(s => s.trim());
-    
+
     const result = await db.query(`
-      SELECT 
+      SELECT
         sku,
         name,
         weight_g,
@@ -101,13 +102,14 @@ router.get('/by-sku', async (req, res) => {
         height_mm,
         photo,
         additional_sku,
+        packaging,
         created_at,
         updated_at
       FROM products
       WHERE sku = ANY($1)
       ORDER BY sku
     `, [skuArray]);
-    
+
     res.json({
       success: true,
       count: result.rows.length,
@@ -115,10 +117,10 @@ router.get('/by-sku', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching products by SKU:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       error: 'Failed to fetch products by SKU',
-      message: error.message 
+      message: error.message
     });
   }
 });
