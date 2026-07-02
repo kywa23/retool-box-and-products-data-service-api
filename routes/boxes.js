@@ -15,12 +15,13 @@ router.get('/', async (req, res) => {
         price_nova_poshta,
         price_ukr_poshta,
         priority,
+        delivery_type,
         created_at,
         updated_at
       FROM boxes
       ORDER BY priority::INTEGER ASC, name
     `);
-    
+
     const formattedData = result.rows.map(row => ({
       name: row.name,
       dimensions: {
@@ -34,6 +35,7 @@ router.get('/', async (req, res) => {
         ukrPoshta: row.price_ukr_poshta
       },
       priority: parseInt(row.priority) || 0,
+      deliveryType: row.delivery_type || 'universal',
       sku: row.sku
     }));
     
