@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
         created_at,
         updated_at
       FROM boxes
-      ORDER BY priority::INTEGER ASC, name
+      ORDER BY priority ASC, name
     `);
 
     const formattedData = result.rows.map(row => ({
@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
         novaPoshta: row.price_nova_poshta,
         ukrPoshta: row.price_ukr_poshta
       },
-      priority: parseInt(row.priority) || 0,
+      priority: parseFloat(row.priority) || 0,
       deliveryType: row.delivery_type || 'universal',
       sku: row.sku
     }));
